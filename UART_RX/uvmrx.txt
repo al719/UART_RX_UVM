@@ -1,0 +1,45 @@
+vlog ./dut/data_sampling.v ./dut/stp_chk.v ./dut/edge_bit_counter.v ./dut/parity_chk.v ./dut/strt_chk.v ./dut/deserializer.v ./dut/FSM_RX.sv ./dut/UART_AS.sv ./dut/UART_RX.sv UART_interface.sv UART_TOP.sv env.svh driver.svh subscriber.svh sequence.svh sequencer.svh tst.svh monitor.svh score_board.svh seq_item.svh agent.svh +cover -covercells
+vsim -voptargs=+acc -fsmdebug work.UART_TOP -cover
+
+add wave -position insertpoint  \
+sim:/UART_TOP/clk
+add wave -position insertpoint  \
+sim:/UART_TOP/Driver/clk_tr
+add wave -position insertpoint  \
+sim:/UART_TOP/uart_if/prescalar_width \
+sim:/UART_TOP/uart_if/scaler_width \
+sim:/UART_TOP/uart_if/DATA_WIDTH \
+sim:/UART_TOP/uart_if/bit_count_width \
+sim:/UART_TOP/uart_if/CLOCK_PERIOD \
+sim:/UART_TOP/uart_if/RX_IN \
+sim:/UART_TOP/uart_if/Prescale \
+sim:/UART_TOP/uart_if/PAR_EN \
+sim:/UART_TOP/uart_if/PAR_TYP \
+sim:/UART_TOP/uart_if/RST \
+sim:/UART_TOP/uart_if/P_DATA \
+sim:/UART_TOP/uart_if/data_valid
+add wave -position insertpoint  \
+sim:/UART_TOP/DUT/controller/current_state \
+sim:/UART_TOP/DUT/controller/next_state
+add wave -position insertpoint  \
+sim:/UART_TOP/DUT/EDGE_U0/bit_count \
+sim:/UART_TOP/DUT/EDGE_U0/edge_count
+add wave -position insertpoint  \
+sim:/UART_TOP/DUT/sampling/sampled_bit \
+sim:/UART_TOP/DUT/sampling/sampled_count
+add wave -position insertpoint  \
+sim:/UART_TOP/DUT/start_checker/strt_chk_en \
+sim:/UART_TOP/DUT/start_checker/strt_err
+add wave -position insertpoint  \
+sim:/UART_TOP/DUT/par_checker/par_chk_en \
+sim:/UART_TOP/DUT/par_checker/par_err
+add wave -position insertpoint  \
+sim:/UART_TOP/DUT/stop_checker/stp_chk_en \
+sim:/UART_TOP/DUT/stop_checker/stp_chk_err
+add wave -position insertpoint  \
+sim:/UART_TOP/DUT/controller/dat_samp_en \
+sim:/UART_TOP/DUT/controller/enable \
+sim:/UART_TOP/DUT/controller/des_en
+
+run -all
+#quit -sim
