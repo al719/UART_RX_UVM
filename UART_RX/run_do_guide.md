@@ -1,0 +1,3 @@
+- ensure the path is correct for all files used in do file
+- ensure wave signal added across do file has the correct path
+- run with command *** do do_filename.txt *** 
